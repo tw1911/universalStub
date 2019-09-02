@@ -9,5 +9,4 @@ public class UniversalStubApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(UniversalStubApplication.class, args);
 	}
-
 }

@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.1.7.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id "com.ewerk.gradle.plugins.jaxb2" version "1.0.9"
 	id 'java'
 }
 
@@ -19,6 +20,7 @@ ext {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
 	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+	compile group: 'com.ibm.mq', name: 'mq-jms-spring-boot-starter', version: '2.1.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
 }
@@ -26,5 +28,18 @@ dependencies {
 dependencyManagement {
 	imports {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+jaxb2 {
+	xjc {
+		'model-classes' {
+			basePackage = 'com.ewerk.gradle.plugins.sample'
+			schema = 'src/main/xsd/model.xsd'
+			bindingsDir = 'src/main/xsd'
+			includedBindingFiles = 'model.xjb'
+			encoding = 'UTF-8'
+			additionalArgs = ['-XtoString']
+		}
 	}
 }

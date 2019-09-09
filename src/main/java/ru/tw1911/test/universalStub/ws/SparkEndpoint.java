@@ -7,6 +7,7 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+import ru.tw1911.test.universalStub.model.CompanyExtendedReport;
 import ru.tw1911.test.universalStub.repository.CompanyExtendedReportRepositrory;
 
 @Endpoint
@@ -20,9 +21,10 @@ public class SparkEndpoint {
     @ResponsePayload
     public GetCompanyExtendedReportResponse getCompanyExtendedReport(@RequestPayload GetCompanyExtendedReport request) {
         GetCompanyExtendedReportResponse response = new GetCompanyExtendedReportResponse();
-        response.setXmlData(companyExtendedReportRepositrory.findReport(request.getInn()).getEscapedXML());
+        CompanyExtendedReport report = companyExtendedReportRepositrory.findReport(request.getInn());
+
+        response.setXmlData(CompanyExtendedReportRepositrory.convertToXmlString(report, CompanyExtendedReport.class));
         response.setGetCompanyExtendedReportResult("somevalue");
-        response.setXmlData("xmldata");
         return response;
     }
 }
